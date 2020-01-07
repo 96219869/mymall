@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.mbg.mapper.ChatListMapper">
+  <resultMap id="BaseResultMap" type="com.macro.mall.tiny.mbg.model.ChatList">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="myid" jdbcType="BIGINT" property="myid" />
+    <result column="myavator" jdbcType="VARCHAR" property="myavator" />
+    <result column="targetid" jdbcType="BIGINT" property="targetid" />
+    <result column="targetname" jdbcType="VARCHAR" property="targetname" />
+    <result column="targetavator" jdbcType="VARCHAR" property="targetavator" />
+    <result column="havenew" jdbcType="TINYINT" property="havenew" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, myid, myavator, targetid, targetname, targetavator, havenew
+  </sql>
+  <select id="selectByExample" parameterType="com.macro.mall.tiny.mbg.model.ChatListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chat_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chat_list
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from chat_list
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.mall.tiny.mbg.model.ChatListExample">
+    delete from chat_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.mall.tiny.mbg.model.ChatList">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into chat_list (myid, myavator, targetid, 
+      targetname, targetavator, havenew
+      )
+    values (#{myid,jdbcType=BIGINT}, #{myavator,jdbcType=VARCHAR}, #{targetid,jdbcType=BIGINT}, 
+      #{targetname,jdbcType=VARCHAR}, #{targetavator,jdbcType=VARCHAR}, #{havenew,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.mall.tiny.mbg.model.ChatList">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into chat_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="myid != null">
+        myid,
+      </if>
+      <if test="myavator != null">
+        myavator,
+      </if>
+      <if test="targetid != null">
+        targetid,
+      </if>
+      <if test="targetname != null">
+        targetname,
+      </if>
+      <if test="targetavator != null">
+        targetavator,
+      </if>
+      <if test="havenew != null">
+        havenew,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="myid != null">
+        #{myid,jdbcType=BIGINT},
+      </if>
+      <if test="myavator != null">
+        #{myavator,jdbcType=VARCHAR},
+      </if>
+      <if test="targetid != null">
+        #{targetid,jdbcType=BIGINT},
+      </if>
+      <if test="targetname != null">
+        #{targetname,jdbcType=VARCHAR},
+      </if>
+      <if test="targetavator != null">
+        #{targetavator,jdbcType=VARCHAR},
+      </if>
+      <if test="havenew != null">
+        #{havenew,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.mall.tiny.mbg.model.ChatListExample" resultType="java.lang.Long">
+    select count(*) from chat_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update chat_list
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.myid != null">
+        myid = #{record.myid,jdbcType=BIGINT},
+      </if>
+      <if test="record.myavator != null">
+        myavator = #{record.myavator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.targetid != null">
+        targetid = #{record.targetid,jdbcType=BIGINT},
+      </if>
+      <if test="record.targetname != null">
+        targetname = #{record.targetname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.targetavator != null">
+        targetavator = #{record.targetavator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.havenew != null">
+        havenew = #{record.havenew,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chat_list
+    set id = #{record.id,jdbcType=BIGINT},
+      myid = #{record.myid,jdbcType=BIGINT},
+      myavator = #{record.myavator,jdbcType=VARCHAR},
+      targetid = #{record.targetid,jdbcType=BIGINT},
+      targetname = #{record.targetname,jdbcType=VARCHAR},
+      targetavator = #{record.targetavator,jdbcType=VARCHAR},
+      havenew = #{record.havenew,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.mall.tiny.mbg.model.ChatList">
+    update chat_list
+    <set>
+      <if test="myid != null">
+        myid = #{myid,jdbcType=BIGINT},
+      </if>
+      <if test="myavator != null">
+        myavator = #{myavator,jdbcType=VARCHAR},
+      </if>
+      <if test="targetid != null">
+        targetid = #{targetid,jdbcType=BIGINT},
+      </if>
+      <if test="targetname != null">
+        targetname = #{targetname,jdbcType=VARCHAR},
+      </if>
+      <if test="targetavator != null">
+        targetavator = #{targetavator,jdbcType=VARCHAR},
+      </if>
+      <if test="havenew != null">
+        havenew = #{havenew,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.mall.tiny.mbg.model.ChatList">
+    update chat_list
+    set myid = #{myid,jdbcType=BIGINT},
+      myavator = #{myavator,jdbcType=VARCHAR},
+      targetid = #{targetid,jdbcType=BIGINT},
+      targetname = #{targetname,jdbcType=VARCHAR},
+      targetavator = #{targetavator,jdbcType=VARCHAR},
+      havenew = #{havenew,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
